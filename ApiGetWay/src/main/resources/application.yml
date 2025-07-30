@@ -1,0 +1,40 @@
+server:
+  port: 8085
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: EMPLOYEE-SERVICE
+          uri: lb://EMPLOYEE-SERVICE
+          predicates:
+            - Path=/employee/**
+
+        - id: EMPLOYEE-SALARY-SERVICE
+          uri: lb://EMPLOYEE-SALARY-SERVICE
+          predicates:
+            - Path=/salary/**
+
+        - id: BANKACCOUNT-SERVICE
+          uri: lb://BANKACCOUNT-SERVICE
+          predicates:
+            - Path=/bankAccount/**
+
+        - id: ATTENDANCE-SERVICE
+          uri: lb://ATTENDANCE-SERVICE
+          predicates:
+            - Path=/attendance/**
+
+      discovery:
+        locator:
+          enabled: true
+
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8080/eureka
